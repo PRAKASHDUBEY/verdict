@@ -23,7 +23,7 @@ dotenv.config({
 connectDB();
 
 app.use('/api/todo/auth', require('./routes/user'));
-
+app.use('/api/todo', require('./routes/verdict'));
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, console.log(`Server running on  Port :${PORT}`.magenta.underline.bold));
