@@ -8,6 +8,21 @@ const verdictSchema = new mongoose.Schema({
     description:{
         type:String,
     },
+    photo:{
+        type:String
+    },
+    support:{
+        type:Number,
+        default:0
+    },
+    oppose:{
+        type:Number,
+        default:0
+    },
+    comment:{
+        type: Array,
+        default: []
+    },
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
@@ -15,7 +30,8 @@ const verdictSchema = new mongoose.Schema({
     finished:{
         type:Boolean,
         default:false
-    },CreatedAt:{
+    },
+    CreatedAt:{
         type:Date,
         default:Date.now
     }

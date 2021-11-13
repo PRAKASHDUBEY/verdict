@@ -1,12 +1,17 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
     username:{
         type:String,
         required:true
     },
-    avatar:{
-        type:String
+    profilePicture:{
+        type:String,
+        default:""
     },
     email:{
         type:String,
@@ -15,6 +20,22 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    followers: {
+        type: Array,
+        default: []
+    },
+    followings: {
+        type: Array,
+        default: []
+    },
+    bio: {
+        type: String,
+        max: 50
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
 });
 

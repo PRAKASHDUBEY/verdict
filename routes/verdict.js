@@ -41,7 +41,7 @@ router.get('/',auth,async(req,res,next) => {
             success:true,
             count:verdict.length,
             verdict:verdict,
-            msg:" Success Full loading of your verdicts"
+            msg:" Successfull loading of your verdicts"
         });
 
     }catch(error){
@@ -67,7 +67,7 @@ router.get('/supported',auth,async(req,res,next) => {
             success:true,
             count:verdict.length,
             verdict:verdict,
-            msg:" Success Full loading of your verdicts"
+            msg:" Successfull loading of your verdicts"
         });
 
     }catch(error){
