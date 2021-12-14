@@ -11,6 +11,10 @@ const verdictSchema = new mongoose.Schema({
     photo:{
         type:String
     },
+    img:{
+        data: Buffer,
+        contentType: String
+    },
     support:{
         type:Number,
         default:0
@@ -26,10 +30,6 @@ const verdictSchema = new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    },
-    finished:{
-        type:Boolean,
-        default:false
     },
     CreatedAt:{
         type:Date,

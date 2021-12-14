@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    profilePicture:{
-        type:String,
-        default:""
+    img:{
+        data: Buffer,
+        contentType: String
     },
     email:{
         type:String,
@@ -32,10 +32,6 @@ const userSchema = new mongoose.Schema({
     bio: {
         type: String,
         max: 50
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false
     }
 });
 

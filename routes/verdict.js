@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/user_jwt");
 const Verdict = require("../models/verdict");
+const auth = require("../middleware/user_jwt");
 
 
-//desc  Create a new verdict
-//Method POST
+//Create verdict
 router.post('/',auth, async(req, res, next) => {
     try{
         const verdict = await Verdict.create({ title:req.body.title, description:req.body.description, user:req.user.id});
@@ -25,8 +24,7 @@ router.post('/',auth, async(req, res, next) => {
     }
 });
 
-//desc  get verdicts
-//Method GET
+//Get posted verdicts
 router.get('/',auth,async(req,res,next) => {
     try{
         const verdict = await Verdict.find({user: req.user.id, finished:false});
@@ -43,16 +41,12 @@ router.get('/',auth,async(req,res,next) => {
             verdict:verdict,
             msg:" Successfull loading of your verdicts"
         });
-
     }catch(error){
         next(error);
     }
 });
 
-
-
-//desc  get supported verdicts 
-//Method GET
+//Get supported verdicts
 router.get('/supported',auth,async(req,res,next) => {
     try{
         const verdict = await Verdict.find({user: req.user.id, finished:true});
@@ -69,15 +63,34 @@ router.get('/supported',auth,async(req,res,next) => {
             verdict:verdict,
             msg:" Successfull loading of your verdicts"
         });
-
     }catch(error){
         next(error);
     }
 });
 
+//Get opposed verdicts
+router.get('/opposed',auth,async(req,res,next) => {
+    try{
+        const verdict = await Verdict.find({user: req.user.id, finished:true});
+        if(!verdict){
+            return res.status(400).json({
+                success:false,
+                msg:"Some Error in loading your verdicts"
+            });
+        }
 
-//desc  Update a verdict
-//Method PUT
+        res.status(200).json({
+            success:true,
+            count:verdict.length,
+            verdict:verdict,
+            msg:" Successfull loading of your verdicts"
+        });
+    }catch(error){
+        next(error);
+    }
+});
+
+//Update verdict
 router.put('/:id',async(req,res,next) => {
     try{
         let verdict = await Verdict.findById(req.params.id);
@@ -104,15 +117,14 @@ router.put('/:id',async(req,res,next) => {
 });
 
 
-//desc  Update a verdict
-//Method PUT
+//Delete posted verdict
 router.delete('/:id' , async(req,res,next) => {
     try{
         let verdict = await Verdict.findById(req.params.id);
         if(!verdict){
             res.status(400).json({
                 success:false,
-                msg:"Verdict Id do not exist"
+                msg:"Verdict do not exist"
             });
         }
         verdict = await Verdict.findByIdAndDelete(req.params.id);
