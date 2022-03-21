@@ -11,14 +11,12 @@ router.post("/register", async (req, res) => {
         let user_email_exist = await User.findOne({email:email});
         let username_exist = await User.findOne({username:username});
         if(user_email_exist){
-            res.json({
-                success:false,
+            res.status(409).json({
                 msg:'User already exist'
             });
         }else if(username_exist){
-            res.json({
-                success:false,
-                msg:'Username already exist'
+            res.status(409).json({
+                msg:'Username not available'
             });
         }else{
             let user = new User();
@@ -29,8 +27,6 @@ router.post("/register", async (req, res) => {
 
             const salt = await bcryptjs.genSalt(10);
             user.password = await bcryptjs.hash(password, salt);
-            let size = 200;
-            user.img = "https://gravatar.com/avatar/?s="+size+'&d=retro';
 
             await user.save();
             const payload ={
@@ -42,18 +38,19 @@ router.post("/register", async (req, res) => {
                 expiresIn:30000
             }, (err, token)=>{
                 if (err) throw err;
-                res.status(200).json({
-                    success:true,
-                    token:token,
-                    msg:'Registered successfully'
+                res.status(201).json({
+                    msg:'Registered successfully',
+                    token:token
                 });
             })
         }
     }catch(err){
-      console.log(err);
+        console.log(err, message);
+        res.status(500).json({
+            msg:`Server Error: ${err}`
+        })
     }
 });
-
 
 //LOGIN
 router.post("/login", async (req, res) => {
@@ -64,15 +61,13 @@ router.post("/login", async (req, res) => {
             email:email
         });
         if(!user){
-            res.status(400).json({
-                success:false,
+            res.status(404).json({
                 msg:'User does not exist, Resister to continue!'
-            })
+            });
         }   
         const isMatch = await bcryptjs.compare(password, user.password);    
         if(!isMatch){
-            return res.status(400).json({
-                success:false,
+            return res.status(401).json({
                 msg:'Inavalid Credentials'  
             })
         }   
@@ -83,20 +78,15 @@ router.post("/login", async (req, res) => {
         }   
         jwt.sign(payload, process.env.jwtUserSecret,{
             expiresIn:300000
-        }, (err, token)=>{
+        },(err, token)=>{
             if (err) throw err;
             res.status(200).json({
-                success:true,
-                msg:'Login Success',
-                token:token,
-                user:user
+                token:token
             });
         })  
-    }catch{
-        console.log(err, message);
+    }catch(err){
         res.status(500).json({
-            success:false,
-            msg:'Server Error'
+            msg:`Server Error: ${err}`
         })
     }
 });

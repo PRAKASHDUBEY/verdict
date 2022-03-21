@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const verdictSchema = new mongoose.Schema({
+    verdictPreview:{
+        type:String,
+        default:"https://firebasestorage.googleapis.com/v0/b/netizens-verdict.appspot.com/o/Application%2Fpost-pic.jpg"
+    },
     title:{
         type:String,
         required:true
@@ -8,24 +12,17 @@ const verdictSchema = new mongoose.Schema({
     description:{
         type:String,
     },
-    photo:{
-        type:String
-    },
-    img:{
-        data: Buffer,
-        contentType: String
+    category:{
+        type:String,
+        required:true
     },
     support:{
-        type:Number,
-        default:0
+        type:Array,
+        default:[]
     },
     oppose:{
-        type:Number,
-        default:0
-    },
-    comment:{
-        type: Array,
-        default: []
+        type:Array,
+        default:[]
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,

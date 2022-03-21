@@ -3,13 +3,13 @@ const morgan = require("morgan");
 const colors = require("colors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const userRoute = require("./routes/user");
+const profileRoute = require("./routes/profile");
+const verdictRoute = require("./routes/verdict");
 const authRoute = require("./routes/auth");
-const postRoute = require("./routes/verdict");
+const mainRoute = require("./routes/main");
 
 const app = express();
 
-//Logger
 app.use(morgan('dev'));
 
 app.use(express.json({}));
@@ -23,11 +23,12 @@ dotenv.config({
 
 connectDB();
 
-app.use("/api/auth", authRoute);
-app.use("/api/users", userRoute);
-app.use("/api/posts", postRoute);
+app.use("/", mainRoute);
+app.use("/authentication", authRoute);
+app.use("/verdict", verdictRoute);
+app.use("/user", profileRoute);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, console.log(`Server running on  Port :${PORT}`.magenta.underline.bold));
-
+app.listen(PORT, 
+    console.log(`Server running on  Port :${PORT}`.magenta.underline.bold));
