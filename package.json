@@ -4,15 +4,11 @@
   "description": "VERDICT API PROJECT",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js"
+    "start": "node server.js",
+    "test": "node server.js"
   },
   "author": "PRAKASH DUBEY",
-  "license": "MIT",
-  "devDependencies": {
-    "colors": "^1.4.0",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.14"
-  },
+  "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^5.18.2",
     "bcryptjs": "^2.4.3",

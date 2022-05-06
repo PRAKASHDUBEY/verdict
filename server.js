@@ -10,16 +10,16 @@ const mainRoute = require("./routes/main");
 
 const app = express();
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 app.use(express.json({}));
 app.use(express.json({
     extented: true
 }));
 
-dotenv.config({
-    path:'./config/config.env'
-});
+// dotenv.config({
+    // path:'./config/config.env'
+// });
 
 connectDB();
 
