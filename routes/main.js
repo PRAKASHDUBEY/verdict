@@ -5,7 +5,7 @@ const Verdict = require('../models/verdict');
 const auth = require('../middleware/user_jwt');
 
 //Home page or redirecting to login
-router.get('/', auth, async(req,res)=>{
+router.get('/', async(req,res)=>{
   const user =await User.findById(req.user.id).select('-password').select('-email');
   const username = await User.find({username:user.username});
   res.status(204).json({
