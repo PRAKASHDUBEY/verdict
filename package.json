@@ -8,7 +8,7 @@
     "test": "node server.js"
   },
   "author": "PRAKASH DUBEY",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@google-cloud/storage": "^5.18.2",
     "bcryptjs": "^2.4.3",
